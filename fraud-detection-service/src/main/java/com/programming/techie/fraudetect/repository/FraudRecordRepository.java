@@ -1,6 +1,8 @@
 package com.programming.techie.fraudetect.repository;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class FraudRecordRepository {
 
-    private final JdbcClient jdbcClient;
+	@Autowired
+    private JdbcClient jdbcClient;
 
     @Transactional(readOnly = true)
     public boolean existsByCustomerId(int customerId) {

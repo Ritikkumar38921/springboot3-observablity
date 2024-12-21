@@ -3,6 +3,8 @@ package com.programming.techie.loans.controller;
 import com.programming.techie.loans.dto.LoanDto;
 import com.programming.techie.loans.service.LoanService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanController {
 
-    private final LoanService loanService;
+	@Autowired
+    private LoanService loanService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

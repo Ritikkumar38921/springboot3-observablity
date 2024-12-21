@@ -6,6 +6,9 @@ import com.programming.techie.loans.entity.Loan;
 import com.programming.techie.loans.entity.LoanStatus;
 import com.programming.techie.loans.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanService {
 
-    private final FraudDetectionClient fraudDetectionClient;
-    private final LoanRepository loanRepository;
+	@Autowired
+    private FraudDetectionClient fraudDetectionClient;
+	@Autowired
+    private LoanRepository loanRepository;
 
     public List<LoanDto> listAllLoans() {
         return loanRepository.findAll()
@@ -25,7 +30,9 @@ public class LoanService {
     }
 
     public String applyLoan(LoanDto loanDto) {
-        var loan = Loan.from(loanDto);
+    	
+    	
+    	Loan loan = Loan.from(loanDto);
         LoanStatus loanStatus = fraudDetectionClient.evaluateLoan(loan.getCustomerId());
         loan.setLoanStatus(loanStatus);
         if (loanStatus.equals(LoanStatus.APPROVED)) {

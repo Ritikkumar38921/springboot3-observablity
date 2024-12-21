@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <springProperty scope="context" name="appName" source="spring.application.name"/>
-
+    <springProperty scope="context" name="hostName" source="spring.application.hostname"/>
+	<springProperty scope="context" name="profile" source="spring.profiles.active"></springProperty>
+	
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
             <url>http://localhost:3100/loki/api/v1/push</url>
         </http>
+        
         <format>
             <label>
-                <pattern>application=${appName},host=${HOSTNAME},level=%level</pattern>
+                <pattern>application=${appName},host=${hostName},level=%level,env=${profile},requestId=%X{RequestId:-LoanServiceSystemLog}
+                </pattern>
             </label>
-            <message>
-                <pattern>${FILE_LOG_PATTERN}</pattern>
+            
+             <message>
+                <!-- Using a JSON format for the log message -->
+                <pattern>
+                    {
+                        "timestamp": "%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+                        "level": "%level",
+                        "logger": "%logger{36}",
+                        "message": "%msg",
+                        "thread": "%thread",
+                        "host": "${hostName}",
+                        "application": "${appName}",
+                        "env": "${profile}",
+                        "requestId": "%X{RequestId}"
+                    }
+                </pattern>
             </message>
             <sortByTime>true</sortByTime>
         </format>
+        
     </appender>
 
     <root level="INFO">

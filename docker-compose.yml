@@ -22,7 +22,9 @@ services:
 
   loki:
     image: grafana/loki:main
-    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    volumes:
+      - ./docker/loki/loki.yaml:/etc/loki/loki.yaml
+    command: [ "-config.file=/etc/loki/loki.yaml" ]
     ports:
       - "3100:3100"
 
@@ -37,14 +39,16 @@ services:
       - "9090:9090"
 
   grafana:
-    image: grafana/grafana:10.1.0
+    image: grafana/grafana-enterprise-dev:11.4.0-79600
     volumes:
-      - ./docker/grafana:/etc/grafana/provisioning/datasources:ro
-    environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      # - ./docker/grafana:/etc/grafana/provisioning/datasources:ro
+      - ./docker/grafana/custom.ini:/etc/grafana/grafana.ini
+    # environment:
+    #   - GF_AUTH_ANONYMOUS_ENABLED=true
+    #   - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    #   - GF_AUTH_DISABLE_LOGIN_FORM=true
+    
     ports:
-      - "3000:3000"
+      - "4000:3000"
 volumes:
   mysql-data:

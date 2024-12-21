@@ -3,6 +3,8 @@ package com.programming.techie.loans.repository;
 import com.programming.techie.loans.entity.Loan;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -17,7 +19,8 @@ import java.util.UUID;
 @Observed
 public class LoanRepository {
 
-    private final JdbcClient jdbcClient;
+	@Autowired
+    private JdbcClient jdbcClient;
 
     @Transactional(readOnly = true)
     public List<Loan> findAll() {

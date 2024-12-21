@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class LoanDto {
     private String loanId;
     private String customerName;
@@ -24,4 +20,53 @@ public class LoanDto {
         return new LoanDto(loan.getLoanId(), loan.getCustomerName(), loan.getCustomerId(),
                 loan.getAmount(), loan.getLoanStatus());
     }
+    
+    public LoanDto(String loanId , String customerName , int customerId , BigDecimal amount , LoanStatus loanStatus  ) {
+    	this.loanId = loanId;
+    	this.customerName = customerName;
+    	this.customerId = customerId;
+    	this.amount = amount;
+    	this.loanStatus = loanStatus;
+    }
+
+	public String getLoanId() {
+		return loanId;
+	}
+
+	public void setLoanId(String loanId) {
+		this.loanId = loanId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public LoanStatus getLoanStatus() {
+		return loanStatus;
+	}
+
+	public void setLoanStatus(LoanStatus loanStatus) {
+		this.loanStatus = loanStatus;
+	}
+    
 }
