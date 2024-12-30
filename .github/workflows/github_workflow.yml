@@ -40,7 +40,7 @@ jobs:
       - name: Build and push Docker Loan application image
         run: |
             docker build -f Dockerfile.loan -t ${{ secrets.DOCKER_HUB_USERNAME }}/loan-service:latest .
-            docker push ${{ secrets.DOCKER_HUB_USERNAME }}/loan-application:latest
+            docker push ${{ secrets.DOCKER_HUB_USERNAME }}/loan-service:latest
 
       - name: Build and push Docker Fraud application image
         run: |
