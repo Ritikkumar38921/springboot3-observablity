@@ -1,0 +1,5 @@
+FROM eclipse-temurin:11-jdk
+WORKDIR /app
+COPY ./loan-service/target/loan-service-1.0.jar /app
+EXPOSE 8080
+CMD ["java", "-jar", "loan-service-1.0.jar"]
